@@ -1,9 +1,9 @@
 import SwiftUI
 
 @main
-struct NanoBananaApp: App {
+struct NanoUIApp: App {
     var body: some Scene {
-        WindowGroup {
+        WindowGroup("NanoUI") {
             ContentView()
                 .frame(minWidth: 860, minHeight: 640)
         }

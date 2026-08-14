@@ -2,12 +2,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "NanoBanana",
+    name: "NanoUI",
     platforms: [.macOS(.v14)],
     targets: [
         .executableTarget(
-            name: "NanoBanana",
-            path: "Sources/NanoBanana"
+            name: "NanoUI",
+            path: "Sources/NanoUI"
         )
     ]
 )
