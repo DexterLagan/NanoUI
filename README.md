@@ -107,3 +107,7 @@ Sources/NanoUI/ContentView.swift   UI: model picker, references, prompt, results
 Sources/NanoUI/OpenRouterService.swift  Image API client + model catalog
 build-app.sh                       Builds the release .app bundle
 ```
+
+## License
+
+[MIT](LICENSE) © 2026 DexterLagan
