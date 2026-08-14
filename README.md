@@ -6,6 +6,8 @@ Written in SwiftUI, no external dependencies.
 
 ![Platform](https://img.shields.io/badge/platform-macOS%2014%2B%20(Apple%20Silicon)-blue)
 
+![NanoUI screenshot](screenshot.png)
+
 ## Features
 
 - **16 image models** — Nano Banana 1 / 2 / Pro / Lite, GPT Image 1 / 2,
