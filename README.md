@@ -110,4 +110,4 @@ build-app.sh                       Builds the release .app bundle
 
 ## License
 
-[MIT](LICENSE) © 2026 DexterLagan
+[MIT](LICENSE) © 2026 Dexter Santucci
