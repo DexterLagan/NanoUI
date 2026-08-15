@@ -22,6 +22,9 @@ struct ContentView: View {
     @State private var showingImporter = false
     @State private var apiKeyOverride = ""
     @State private var zoomed = false
+    @State private var rememberKey = false
+
+    private let savedKeyDefaultsKey = "openrouterAPIKey"
 
     private var selectedModel: ImageModel {
         OpenRouterService.catalog.first { $0.id == modelID } ?? OpenRouterService.catalog[0]
@@ -43,6 +46,7 @@ struct ContentView: View {
             rightPanel
                 .frame(minWidth: 420, maxWidth: .infinity, maxHeight: .infinity)
         }
+        .onAppear(perform: loadSavedKey)
     }
 
     private var leftPanel: some View {
@@ -63,6 +67,9 @@ struct ContentView: View {
             if !envKeySet {
                 SecureField("OpenRouter API key", text: $apiKeyOverride)
                     .textFieldStyle(.roundedBorder)
+                Toggle("Remember on this Mac", isOn: $rememberKey)
+                    .font(.caption)
+                    .onChange(of: rememberKey, updateSavedKey)
             }
 
             HStack(spacing: 16) {
@@ -255,6 +262,7 @@ struct ContentView: View {
         guard !isLoading else { return }
         errorMessage = nil
         isLoading = true
+        updateSavedKey()
         let imageData = referenceImages.map(\.data)
         let model = selectedModel
         let res = resolution.isEmpty ? nil : resolution
@@ -279,6 +287,24 @@ struct ContentView: View {
                 errorMessage = error.localizedDescription
             }
             isLoading = false
+        }
+    }
+
+    private func loadSavedKey() {
+        guard !envKeySet else { return }
+        if let saved = UserDefaults.standard.string(forKey: savedKeyDefaultsKey),
+           !saved.isEmpty {
+            apiKeyOverride = saved
+            rememberKey = true
+        }
+    }
+
+    private func updateSavedKey() {
+        let trimmed = apiKeyOverride.trimmingCharacters(in: .whitespacesAndNewlines)
+        if rememberKey && !trimmed.isEmpty {
+            UserDefaults.standard.set(trimmed, forKey: savedKeyDefaultsKey)
+        } else if !rememberKey {
+            UserDefaults.standard.removeObject(forKey: savedKeyDefaultsKey)
         }
     }
 
