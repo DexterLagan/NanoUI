@@ -1,18 +1,42 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#2A2722"/>
-      <stop offset="1" stop-color="#15130F"/>
+      <stop offset="0" stop-color="#2C2822"/>
+      <stop offset="1" stop-color="#131110"/>
     </linearGradient>
+    <radialGradient id="bgGlow" cx="0.5" cy="0.28" r="0.65">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.07"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFD54F" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#FFD54F" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="banana" x1="0.2" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#FFE082"/>
+      <stop offset="0.5" stop-color="#FFC93C"/>
+      <stop offset="1" stop-color="#F0931C"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
   </defs>
+
   <rect width="512" height="512" rx="112" fill="url(#bg)"/>
-  <path d="M 160 328
-           C 168 214 268 134 368 156
-           C 300 172 244 208 200 262
-           C 176 290 166 310 160 328 Z"
-        fill="#FFD54F"/>
-  <path d="M 368 156 C 386 138 404 128 430 122"
-        fill="none" stroke="#FFD54F" stroke-width="26" stroke-linecap="round"/>
+  <rect width="512" height="512" rx="112" fill="url(#bgGlow)"/>
+
+  <circle cx="256" cy="250" r="150" fill="url(#halo)"/>
+
+  <g filter="url(#shadow)">
+    <path d="M 168 344 A 192 192 0 0 1 362 150"
+          fill="none" stroke="url(#banana)" stroke-width="64" stroke-linecap="round"/>
+    <path d="M 356 144 L 396 114"
+          fill="none" stroke="#6D4C41" stroke-width="22" stroke-linecap="round"/>
+  </g>
+
+  <path d="M 196 318 A 156 156 0 0 1 348 168"
+        fill="none" stroke="#FFFFFF" stroke-opacity="0.30" stroke-width="10" stroke-linecap="round"/>
+
   <path d="M 0 -100 C 10 -20 20 -10 100 0 C 20 10 10 20 0 100 C -10 20 -20 10 -100 0 C -20 -10 -10 -20 0 -100 Z"
-        fill="#FFD54F" transform="translate(128 128) scale(0.55)"/>
+        fill="#FFD54F" transform="translate(124 124) scale(0.5)"/>
 </svg>
