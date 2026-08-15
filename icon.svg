@@ -9,7 +9,7 @@
       <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#FFD54F" stop-opacity="0.15"/>
+      <stop offset="0" stop-color="#FFD54F" stop-opacity="0.14"/>
       <stop offset="1" stop-color="#FFD54F" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="banana" x1="0.2" y1="0" x2="0.85" y2="1">
@@ -18,22 +18,22 @@
       <stop offset="1" stop-color="#F0931C"/>
     </linearGradient>
     <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.45"/>
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000000" flood-opacity="0.45"/>
     </filter>
   </defs>
 
   <rect width="512" height="512" rx="112" fill="url(#bg)"/>
   <rect width="512" height="512" rx="112" fill="url(#bgGlow)"/>
 
-  <circle cx="256" cy="262" r="150" fill="url(#halo)"/>
+  <circle cx="256" cy="256" r="175" fill="url(#halo)"/>
 
-  <g transform="rotate(-18 256 262)">
-    <ellipse cx="256" cy="262" rx="142" ry="94" fill="none"
-             stroke="#FFD54F" stroke-opacity="0.28" stroke-width="2"
+  <g transform="rotate(-15 256 256)">
+    <ellipse cx="256" cy="256" rx="172" ry="112" fill="none"
+             stroke="#FFD54F" stroke-opacity="0.25" stroke-width="2"
              stroke-dasharray="0.1 13" stroke-linecap="round"/>
   </g>
 
-  <g filter="url(#shadow)" transform="translate(137 151) scale(0.45)">
+  <g filter="url(#shadow)" transform="translate(-62 -40) scale(1.2)">
     <path d="M 168 344 A 192 192 0 0 1 362 150"
           fill="none" stroke="url(#banana)" stroke-width="64" stroke-linecap="round"/>
     <path d="M 356 144 L 396 114"
@@ -43,7 +43,7 @@
   </g>
 
   <path d="M 0 -100 C 10 -20 20 -10 100 0 C 20 10 10 20 0 100 C -10 20 -20 10 -100 0 C -20 -10 -10 -20 0 -100 Z"
-        fill="#FFD54F" transform="translate(122 122) scale(0.5)"/>
+        fill="#FFD54F" transform="translate(106 106) scale(0.5)"/>
   <path d="M 0 -100 C 10 -20 20 -10 100 0 C 20 10 10 20 0 100 C -10 20 -20 10 -100 0 C -20 -10 -10 -20 0 -100 Z"
-        fill="#FFD54F" transform="translate(396 130) scale(0.22)"/>
+        fill="#FFD54F" transform="translate(412 118) scale(0.22)"/>
 </svg>
