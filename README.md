@@ -108,6 +108,8 @@ Sources/NanoUI/NanoUIApp.swift     App entry point
 Sources/NanoUI/ContentView.swift   UI: model picker, references, prompt, results
 Sources/NanoUI/OpenRouterService.swift  Image API client + model catalog
 build-app.sh                       Builds the release .app bundle
+icon.svg                           App icon source (vector)
+icon-512x512.png / Icon.icns       App icon raster and macOS icon bundle
 ```
 
 ## License

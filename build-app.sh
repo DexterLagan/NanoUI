@@ -3,8 +3,9 @@ set -e
 cd "$(dirname "$0")"
 swift build -c release
 rm -rf NanoUI.app
-mkdir -p NanoUI.app/Contents/MacOS
+mkdir -p NanoUI.app/Contents/MacOS NanoUI.app/Contents/Resources
 cp .build/release/NanoUI NanoUI.app/Contents/MacOS/
+cp Icon.icns NanoUI.app/Contents/Resources/
 cat > NanoUI.app/Contents/Info.plist <<'EOF'
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -18,6 +19,7 @@ cat > NanoUI.app/Contents/Info.plist <<'EOF'
     <key>CFBundleShortVersionString</key><string>1.0</string>
     <key>CFBundleVersion</key><string>1</string>
     <key>LSMinimumSystemVersion</key><string>14.0</string>
+    <key>CFBundleIconFile</key><string>Icon</string>
 </dict>
 </plist>
 EOF
