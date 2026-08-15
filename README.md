@@ -21,8 +21,10 @@ Written in SwiftUI, no external dependencies.
 - **Zoom toggle** — results are fitted to the window by default; click an image
   to switch to 1:1 pixel zoom (scrollable), click again to fit back
 - **Save as…** — per-image save panel with the correct file extension
-- **API key** — read from `OPENROUTER_API_KEY`, or paste one in-app when the
-  environment variable is missing (used for the session only)
+- **API key** — read from `OPENROUTER_API_KEY` when set; otherwise a key can be
+  pasted in-app and optionally saved with **Remember on this Mac** (stored in
+  plaintext under `~/Library/Preferences/local.nanoui.app.plist`; unchecking
+  the toggle deletes it)
 
 ## Installation
 
