@@ -23,6 +23,8 @@ struct ContentView: View {
     @State private var apiKeyOverride = ""
     @State private var zoomed = false
     @State private var rememberKey = false
+    @State private var imagePendingDeletion: ReferenceImage?
+    @State private var pendingReplacementID: UUID?
 
     private let savedKeyDefaultsKey = "openrouterAPIKey"
 
@@ -121,6 +123,21 @@ struct ContentView: View {
                                 .buttonStyle(.plain)
                                 .padding(3)
                             }
+                            .contextMenu {
+                                Button(role: .destructive) {
+                                    imagePendingDeletion = ref
+                                } label: {
+                                    Label("Delete…", systemImage: "trash")
+                                }
+                                Button {
+                                    pendingReplacementID = ref.id
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                                        showingImporter = true
+                                    }
+                                } label: {
+                                    Label("Replace…", systemImage: "arrow.triangle.2.circlepath")
+                                }
+                            }
                         }
                     }
                 }
@@ -137,15 +154,38 @@ struct ContentView: View {
             .fileImporter(
                 isPresented: $showingImporter,
                 allowedContentTypes: [.image],
-                allowsMultipleSelection: true
+                allowsMultipleSelection: pendingReplacementID == nil
             ) { result in
                 if case .success(let urls) = result {
-                    for url in urls where referenceImages.count < selectedModel.maxReferences {
-                        if let data = try? Data(contentsOf: url) {
-                            referenceImages.append(ReferenceImage(data: data))
+                    if let id = pendingReplacementID,
+                       let url = urls.first,
+                       let data = try? Data(contentsOf: url),
+                       let idx = referenceImages.firstIndex(where: { $0.id == id }) {
+                        referenceImages[idx] = ReferenceImage(data: data)
+                    } else {
+                        for url in urls where referenceImages.count < selectedModel.maxReferences {
+                            if let data = try? Data(contentsOf: url) {
+                                referenceImages.append(ReferenceImage(data: data))
+                            }
                         }
                     }
                 }
+                pendingReplacementID = nil
+            }
+            .confirmationDialog(
+                "Delete this reference image?",
+                isPresented: Binding(
+                    get: { imagePendingDeletion != nil },
+                    set: { if !$0 { imagePendingDeletion = nil } }
+                ),
+                presenting: imagePendingDeletion
+            ) { image in
+                Button("Delete", role: .destructive) {
+                    referenceImages.removeAll { $0.id == image.id }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: { _ in
+                Text("This will remove the image from the references used by the next generation.")
             }
 
             Text("Prompt")

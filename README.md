@@ -16,7 +16,8 @@ Written in SwiftUI, no external dependencies.
 - **Per-model controls** — resolution (`512`–`4K`), aspect ratio, and quality
   pickers appear only when the selected model supports them
 - **Reference images** — image-to-image editing with a per-model upload cap
-  (up to 14 for Nano Banana 2); thumbnails with one-click removal
+  (up to 14 for Nano Banana 2); thumbnails with one-click removal and a
+  right-click menu to delete (with confirmation) or replace an image
 - **Multi-image generation** — `n` stepper for models that support it (up to 10)
 - **Zoom toggle** — results are fitted to the window by default; click an image
   to switch to 1:1 pixel zoom (scrollable), click again to fit back
@@ -103,6 +104,11 @@ Full parameter set for the default model, per OpenRouter's discovery API:
 - `seed`: boolean (not exposed in the UI)
 
 ## Changelog
+
+### v1.0.2
+
+- Context menu on reference image thumbnails: **Delete…** (with confirmation
+  dialog) and **Replace…** (pick a new image for the same slot)
 
 ### v1.0.1
 
