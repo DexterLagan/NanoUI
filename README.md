@@ -102,6 +102,22 @@ Full parameter set for the default model, per OpenRouter's discovery API:
 - `n`: 1
 - `seed`: boolean (not exposed in the UI)
 
+## Changelog
+
+### v1.0.1
+
+- Clear error messages for API failures (invalid key, insufficient credits,
+  rate limits, upstream errors) instead of a cryptic decoding error
+- API key field always visible, with an indicator when the key comes from the
+  `OPENROUTER_API_KEY` environment variable
+- Remember API key on this Mac
+- Custom app icon
+
+### v1.0
+
+- Initial release: Image API client, 16 models, reference images,
+  resolution / aspect ratio / quality controls, multi-image generation
+
 ## Project layout
 
 ```
