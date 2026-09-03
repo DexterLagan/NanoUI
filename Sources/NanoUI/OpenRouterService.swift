@@ -211,9 +211,20 @@ struct OpenRouterService {
 
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
         guard let http = response as? HTTPURLResponse else { throw OpenRouterError.badResponse }
-        let decoded = try JSONDecoder().decode(ImageResponse.self, from: data)
-        if http.statusCode != 200 {
-            throw OpenRouterError.api(decoded.error?.message ?? "HTTP \(http.statusCode)")
+
+        guard http.statusCode == 200 else {
+            throw OpenRouterError.api(parseErrorMessage(from: data, statusCode: http.statusCode))
+        }
+        guard !data.isEmpty else {
+            throw OpenRouterError.api("The server returned an empty response. Please try again.")
+        }
+
+        let decoded: ImageResponse
+        do {
+            decoded = try JSONDecoder().decode(ImageResponse.self, from: data)
+        } catch {
+            let preview = String(data: data.prefix(300), encoding: .utf8) ?? "<binary>"
+            throw OpenRouterError.api("Unexpected response format: \(preview)")
         }
         guard !decoded.data.isEmpty else { throw OpenRouterError.badResponse }
 
@@ -222,6 +233,24 @@ struct OpenRouterService {
                 throw OpenRouterError.badResponse
             }
             return GeneratedImage(data: imageData, mediaType: image.mediaType)
+        }
+    }
+
+    private func parseErrorMessage(from data: Data, statusCode: Int) -> String {
+        if let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+           let err = obj["error"] as? [String: Any],
+           let msg = err["message"] as? String {
+            return "\(msg) (HTTP \(statusCode))"
+        }
+        if !data.isEmpty, let raw = String(data: data.prefix(300), encoding: .utf8) {
+            return "HTTP \(statusCode): \(raw)"
+        }
+        switch statusCode {
+        case 401: return "HTTP 401: invalid API key. Check the key field or OPENROUTER_API_KEY."
+        case 402: return "HTTP 402: insufficient credits."
+        case 429: return "HTTP 429: rate limited. Please wait and retry."
+        case 500...599: return "HTTP \(statusCode): the generation failed upstream and was not billed. Please retry."
+        default: return "HTTP \(statusCode): the request failed. Please retry."
         }
     }
 }

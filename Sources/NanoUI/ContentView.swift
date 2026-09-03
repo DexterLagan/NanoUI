@@ -64,9 +64,13 @@ struct ContentView: View {
                 if !selectedModel.qualities.contains(quality) { quality = "" }
             }
 
-            if !envKeySet {
-                SecureField("OpenRouter API key", text: $apiKeyOverride)
-                    .textFieldStyle(.roundedBorder)
+            SecureField("OpenRouter API key", text: $apiKeyOverride)
+                .textFieldStyle(.roundedBorder)
+            if envKeySet && apiKeyOverride.isEmpty {
+                Text("Using OPENROUTER_API_KEY from the environment")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            } else if !envKeySet {
                 Toggle("Remember on this Mac", isOn: $rememberKey)
                     .font(.caption)
                     .onChange(of: rememberKey, updateSavedKey)
